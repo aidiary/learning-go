@@ -2,21 +2,38 @@ package main
 
 import (
 	"fmt"
-	"strings"
+	"math"
 )
 
-type MyString string
 
-func (ms MyString) Capitalize() MyString {
-	if len(ms) == 0 {
-		return ms
-	}
-
-	return MyString(strings.ToUpper(string(ms[0]))) + MyString(ms[1:])
+type Shape interface {
+	Area() float64
 }
-func main() {
-	str := MyString("hello, world!")
 
-	capitalized := str.Capitalize()
-	fmt.Println(capitalized)
+type Circle struct {
+	Radius float64
+}
+
+func (c Circle) Area() float64 {
+	return math.Pi * c.Radius * c.Radius
+}
+
+type Rectangle struct {
+	Width, Height float64
+}
+
+func (r Rectangle) Area() float64 {
+	return r.Width * r.Height
+}
+
+func printArea(s Shape) {
+	fmt.Printf("Area: %f\n", s.Area())
+}
+
+func main() {
+	circle := Circle{Radius: 5}
+	rectangle := Rectangle{Width: 3, Height: 4}
+
+	printArea(circle)
+	printArea(rectangle)
 }
